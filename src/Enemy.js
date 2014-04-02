@@ -50,7 +50,7 @@ var Enemy = cc.Sprite.extend({
 	isHit: function(){
 		var posP = this.player.getPosition();
 		var posE = this.getPosition();
-		if(posP.x <= posE.x + 5 && posP.x >= posE.x - 5 && posP.y <= posE.y + 5 && posP.y >= posE.y - 5){
+		if(posP.x <= posE.x + 50 && posP.x >= posE.x - 50 && posP.y <= posE.y + 150 && posP.y >= posE.y - 150){
 			this.removeFromParent( true );
 		}
 	},

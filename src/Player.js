@@ -17,6 +17,13 @@ var Player = cc.Sprite.extend({
 		this.HEIGHT = 600;
 		this.maxAmmo = 10;
 		this.ammo = 10;
+		this.schedule(function() {
+			if(this.ammo < this.maxAmmo){
+				this.ammo += 1;
+				this.ammoBar.setAmmo( ( this.ammo / this.maxAmmo ) * 100 );
+			}
+		},3);
+
 	},
 
 	createStandAction: function(){
@@ -37,10 +44,12 @@ var Player = cc.Sprite.extend({
 	},
 
 	attacked: function( damage ){
-		this.live -= damage;
-		if( this.live <= 0 )
-			this.end = true;
-		this.liveBar.setLive( ( this.live / this.maxLive ) * 100 );
+		if( this.live > 0 ){
+			this.live -= damage;
+			if( this.live <= 0 )
+				this.end = true;
+			this.liveBar.setLive( ( this.live / this.maxLive ) * 100 );
+		}
 	},
 
 	goRight: function() {
@@ -77,9 +86,9 @@ var Player = cc.Sprite.extend({
 		if( this.ammo > 0 ){
 			this.ammo -= 1;
 			this.ammoBar.setAmmo( ( this.ammo / this.maxAmmo ) * 100 );
-		}
-		for( var i = 0 ; i < this.enemys.length ; i++ ){
-			this.enemys[i].isFired();
+			for( var i = 0 ; i < this.enemys.length ; i++ ){
+				this.enemys[i].isFired();
+			}
 		}
 	},
 

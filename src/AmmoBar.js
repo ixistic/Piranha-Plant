@@ -20,6 +20,7 @@ var AmmoBar = cc.Node.extend({
 		this.barBoarder.setAnchorPoint( new cc.Point( 0, 0 ) );
 		this.barBoarder.setPosition( new cc.Point( 0, 0 ) );
 		this.addChild( this.barBoarder );
+
 	},
 
 	setAmmo: function( percent ) {
