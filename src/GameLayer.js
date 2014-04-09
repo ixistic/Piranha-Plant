@@ -46,7 +46,7 @@ var GameLayer = cc.LayerColor.extend({
 
             case cc.KEY.right:
                 this.player.goRight();
-                break
+                break;
 
             case cc.KEY.left:
                 this.player.goLeft();

@@ -55,23 +55,31 @@ var Player = cc.Sprite.extend({
 	goRight: function() {
 		this.setFlippedX( true );
 		this.keyRight = true;
-		this.vX = 4;
+		this.vX = Player.SPEED;
 	},
 
 	goLeft: function() {
 		this.setFlippedX( false );
 		this.keyLeft = true;
-		this.vX = -4;
+		this.vX = -Player.SPEED;
 	},
 
 	stopRight: function() {
+		if(this.keyLeft)
+			this.vX = -Player.SPEED;
+		else {
+			this.vX = 0;
+		}
 		this.keyRight = false;
-		this.vX = 0;
 	},
 
 	stopLeft: function() {
+		if(this.keyRight)
+			this.vX = Player.SPEED;
+		else {
+			this.vX = 0;
+		}
 		this.keyLeft = false;
-		this.vX = 0;
 	},
 
 	move: function(){
@@ -100,3 +108,5 @@ var Player = cc.Sprite.extend({
 		this.move();
 	},
 });
+
+Player.SPEED = 5;
