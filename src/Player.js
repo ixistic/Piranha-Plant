@@ -15,8 +15,8 @@ var Player = cc.Sprite.extend({
 		this.keySpace = false;
 		this.WIDTH = 600;
 		this.HEIGHT = 600;
-		this.maxAmmo = 10;
-		this.ammo = 10;
+		this.maxAmmo = 100;
+		this.ammo = 100;
 		this.currentRotation = 0;
 		this.gameLayer = gameLayer;
 

@@ -5,7 +5,9 @@ var EnemyFactory = cc.Node.extend({
 	},
 
 	getEnemy: function( ){
-		var enemy = new Enemy( this.player );
+		var genType = Math.round( Math.random() * 2 );
+
+		var enemy = new Enemy( this.player , genType );
 		this.genPostion( enemy );
 		return enemy;
 	},

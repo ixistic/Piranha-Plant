@@ -13,7 +13,7 @@ var Map = cc.Node.extend({
 			var enemy = this.factory.getEnemy();
 			enemy.setPosition( cc.p( enemy.sX, enemy.sY ) );
 			enemy.scheduleUpdate();
-			this.addChild( enemy );
+			this.addChild( enemy , 50 );
 			this.player.enemys.push( enemy );
 			this.spawnEnemy( Math.round( Math.random() * 3 ) );
 			if( this.player.end )
@@ -25,7 +25,8 @@ var Map = cc.Node.extend({
 		var fireball = new Fireball( x , y , this.player , this.gameLayer );
 		fireball.setPosition( cc.p ( fireball.sX, fireball.sY ) );
 		fireball.scheduleUpdate();
-		this.addChild( fireball );
+		this.addChild( fireball , 100 );
 	},
 
 });
+
