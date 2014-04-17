@@ -22,7 +22,7 @@ var Player = cc.Sprite.extend({
 
 		this.schedule(function() {
 			if( this.gameLayer.timeP > 0 && !this.end ){
-				this.gameLayer.updateTime();
+				this.gameLayer.updateTime(-1);
 			}
 			else
 				this.end = true;
@@ -62,8 +62,10 @@ var Player = cc.Sprite.extend({
 	attacked: function( damage ){
 		if( this.live > 0 ){
 			this.live -= damage;
-			if( this.live <= 0 )
+			if( this.live <= 0 ){
 				this.end = true;
+				this.gameLayer.updateTime(0);
+			}
 			this.liveBar.setLive( ( this.live / this.maxLive ) * 100 );
 		}
 	},
@@ -122,8 +124,6 @@ var Player = cc.Sprite.extend({
 		this.setRotation(this.currentRotation);
 		this.move();
 	},
-
-	
 
     handleTouchMove: function( touchLocation ){
         var angle = Math.atan2( touchLocation.x - 300, touchLocation.y - 100 );

@@ -60,7 +60,10 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     updateTime: function( time ) {
-        this.timeP -= 1;
+        if(time == 0)
+            this.timeP = 0;
+        else
+            this.timeP += time;
         this.timeLabel.setString( this.timeP );
     },
 
