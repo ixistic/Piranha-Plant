@@ -4,7 +4,7 @@ var FireBallFactory = cc.Node.extend({
 		this.player = player;
 	},
 
-	getEnemy: function( number ){
+	getFireball: function( number ){
 		array = [];
 		for( var i = 0 ; i < number ; i++ ){
 			var enemy = new Enemy( this.player );

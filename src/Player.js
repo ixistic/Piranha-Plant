@@ -17,9 +17,8 @@ var Player = cc.Sprite.extend({
 		this.HEIGHT = 600;
 		this.maxAmmo = 10;
 		this.ammo = 10;
-
-		this.fireball = new Fireball();
-        this.addChild( this.fireball );
+		this.fireballArray = [];
+		this.countFire = 0;
 
 		this.schedule(function() {
 			if(this.ammo < this.maxAmmo){
@@ -45,6 +44,16 @@ var Player = cc.Sprite.extend({
 
 	setAmmoBar: function( ammoBar ) {
 		this.ammoBar = ammoBar;
+	},
+	
+	spawnFireball: function( ){
+		var pos = this.getPosition();
+		var fireball = new Fireball( pos.x , pos.y );
+		this.fireballArray.push( fireball );
+		fireball.setPosition( cc.p ( fireball.sX, fireball.sY ) );
+		fireball.scheduleUpdate();
+		this.addChild( fireball );
+		console.log(this.fireballArray.size);
 	},
 
 	attacked: function( damage ){
@@ -98,6 +107,7 @@ var Player = cc.Sprite.extend({
 		if( this.ammo > 0 ){
 			this.ammo -= 1;
 			this.ammoBar.setAmmo( ( this.ammo / this.maxAmmo ) * 100 );
+			this.spawnFireball();
 			for( var i = 0 ; i < this.enemys.length ; i++ ){
 				this.enemys[i].isFired();
 			}

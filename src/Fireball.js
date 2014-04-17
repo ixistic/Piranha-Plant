@@ -1,10 +1,9 @@
 var Fireball = cc.Sprite.extend({
 
-	ctor: function(player){
+	ctor: function( xP , yP ){
 		this._super();
-		this.player = player;
-		this.sX = 0;
-		this.sY = 0;
+		this.sX = xP;
+		this.sY = yP;
 		this.standAction  = this.createStandAction();
 		this.runAction( this.standAction );
 		this.damage = 1;
@@ -17,12 +16,11 @@ var Fireball = cc.Sprite.extend({
 			this.overRange();
 		}
 		this.move();
-		this.isHit();
 	},
 
 	move: function(){
 		var pos = this.getPosition();
-		this.setPosition( pos.x , pos.y - this.speed );
+		this.setPosition( pos.x , pos.y + this.speed );
 	},
 
 	createStandAction: function() {
