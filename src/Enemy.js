@@ -64,8 +64,10 @@ var Enemy = cc.Sprite.extend({
 
 	isFired: function(){
 		this.HP -= 1;
-		if( this.HP <= 0 )
+		if( this.HP <= 0 ) {
+			this.setPosition( 0 , 0 );
 			this.removeFromParent( true );
+		}
 	},
 
 	fall: function(){
