@@ -1,9 +1,10 @@
 var Fireball = cc.Sprite.extend({
 
-	ctor: function( xP , yP ){
+	ctor: function( xP , yP , player ){
 		this._super();
 		this.sX = xP;
 		this.sY = yP;
+		this.player = player;
 		this.standAction  = this.createStandAction();
 		this.runAction( this.standAction );
 		this.damage = 1;
@@ -12,8 +13,11 @@ var Fireball = cc.Sprite.extend({
 
 	update: function( dt ){
 		var pos = this.getPosition();
-		if( pos.y <= 30 || pos.y >= 200 ) {
+		if( pos.y <= 30 || pos.y >= 600 ) {
 			this.overRange();
+		}
+		for( var i = 0 ; i < this.player.enemys.length ; i++ ){
+			this.isHit( this.player.enemys[i] );
 		}
 		this.move();
 	},
@@ -45,6 +49,7 @@ var Fireball = cc.Sprite.extend({
 		var posE = enemy.getPosition();
 		var posF = this.getPosition();
 		if(posE.x <= posF.x + 50 && posE.x >= posF.x - 50 && posE.y <= posF.y + 150 && posE.y >= posF.y - 150){
+			enemy.isFired();
 			this.removeFromParent( true );
 		}
 	},

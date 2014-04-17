@@ -1,6 +1,6 @@
 var Enemy = cc.Sprite.extend({
 
-	ctor: function(player){
+	ctor: function( player ){
 		this._super();
 		this.player = player;
 		this.HP = 3;
