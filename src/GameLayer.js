@@ -9,16 +9,21 @@ var GameLayer = cc.LayerColor.extend({
         this.background.setAnchorPoint( new cc.Point( 0, 0 ) );
         this.addChild( this.background, 0 );
 
+        this.score = 0;
+        this.scoreLabel = cc.LabelTTF.create( '0', 'Arial', 32 );
+        this.scoreLabel.setPosition( cc.p( 525, 525 ) );
+        this.addChild( this.scoreLabel );
+
         // this._super( new cc.Color4B( 127, 127, 127, 255 ) );
         this.setPosition( new cc.Point( 0, 0 ) );
 
-        this.player = new Player();
+        this.player = new Player( );
         this.player.setPosition(cc.p( 300 , 35 ));
         this.addChild( this.player );
 
         this.factory = new EnemyFactory( this.player );
 
-        this.map = new Map( this.player,this.factory );
+        this.map = new Map( this.player, this.factory, this );
         this.addChild( this.map );
 
         this.playerLive = new PlayerLive();
@@ -37,6 +42,12 @@ var GameLayer = cc.LayerColor.extend({
  
         return true;
     },
+
+    updateScore: function( score ) {       
+        this.score += score;
+        this.scoreLabel.setString( this.score );
+    },
+
 
     onKeyDown: function( e ){
         switch ( e ) {

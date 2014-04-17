@@ -1,6 +1,6 @@
 var Player = cc.Sprite.extend({ 
 
-	ctor: function(){
+	ctor: function( ){
 		this._super();
 		this.setAnchorPoint( cc.p( 0.5,0 ) );
 		this.standAction  = this.createStandAction();
@@ -96,12 +96,14 @@ var Player = cc.Sprite.extend({
 		}
 	},
 
-	fire: function(){
+	fire: function(  ){
 		console.log("Fire!!");
 		if( this.ammo > 0 && this.enemys != null){
 			this.ammo -= 1;
 			this.ammoBar.setAmmo( ( this.ammo / this.maxAmmo ) * 100 );
 			this.spawnFireball();
+			
+
 			// for( var i = 0 ; i < this.enemys.length ; i++ ){
 			// 	this.enemys[i].isFired();
 			// }

@@ -1,9 +1,10 @@
 var Map = cc.Node.extend({
 
-	ctor: function( player , factory ) {
+	ctor: function( player, factory, gameLayer) {
 		this._super();
 		this.player = player;
 		this.factory = factory;
+		this.gameLayer = gameLayer;
 		this.spawnEnemy( 3 );
 	},
 
@@ -21,7 +22,7 @@ var Map = cc.Node.extend({
 	},
 
 	spawnFireball: function( x , y ){
-		var fireball = new Fireball( x , y , this.player );
+		var fireball = new Fireball( x , y , this.player , this.gameLayer );
 		fireball.setPosition( cc.p ( fireball.sX, fireball.sY ) );
 		fireball.scheduleUpdate();
 		this.addChild( fireball );

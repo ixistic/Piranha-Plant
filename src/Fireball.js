@@ -1,10 +1,11 @@
 var Fireball = cc.Sprite.extend({
 
-	ctor: function( xP , yP , player ){
+	ctor: function( xP, yP, player, gameLayer ){
 		this._super();
 		this.sX = xP;
 		this.sY = yP;
 		this.player = player;
+		this.gameLayer = gameLayer;
 		this.standAction  = this.createStandAction();
 		this.runAction( this.standAction );
 		this.damage = 1;
@@ -52,6 +53,7 @@ var Fireball = cc.Sprite.extend({
 			console.log("Hitttt");
 			enemy.isFired();
 			this.removeFromParent( true );
+			this.gameLayer.updateScore( 1 );
 		}
 	},
 });
