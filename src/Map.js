@@ -18,6 +18,8 @@ var Map = cc.Node.extend({
 			}
 			this.player.enemys = enemy;
 			this.spawnEnemy( Math.round( Math.random() * 3 ) );
+			if( this.player.end )
+				this.getScheduler().unscheduleAllCallbacksForTarget( this );
 		}, delay);
 	},
 
