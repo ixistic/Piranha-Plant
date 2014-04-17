@@ -17,6 +17,10 @@ var Player = cc.Sprite.extend({
 		this.HEIGHT = 600;
 		this.maxAmmo = 10;
 		this.ammo = 10;
+
+		this.fireball = new Fireball();
+        this.addChild( this.fireball );
+
 		this.schedule(function() {
 			if(this.ammo < this.maxAmmo){
 				this.ammo += 1;
