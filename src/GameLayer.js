@@ -1,9 +1,6 @@
 var GameLayer = cc.LayerColor.extend({
     init: function() {
 
-        // this.debugLabel = cc.LabelTTF.create( 'Piranha Plant', 'Arial', 20 );
-        // this.debugLabel.setPosition( new cc.Point( screenWidth / 2,screenHeight - 30 ) );
-        // this.addChild( this.debugLabel, 2 );
         this._super();
         this.background = cc.Sprite.create ( 'img/bg.png' );
         this.background.setAnchorPoint( new cc.Point( 0, 0 ) );
@@ -11,13 +8,20 @@ var GameLayer = cc.LayerColor.extend({
 
         this.score = 0;
         this.scoreLabel = cc.LabelTTF.create( '0', 'Arial', 32 );
-        this.scoreLabel.setPosition( cc.p( 525, 525 ) );
+        this.scoreLabel.setColor(new cc.Color3B( 0, 200, 0 ) );
+        this.scoreLabel.setPosition( cc.p( 525, 100 ) );
         this.addChild( this.scoreLabel );
+
+        this.timeP = 60;
+        this.timeLabel = cc.LabelTTF.create( '60', 'Arial', 32 );
+        this.timeLabel.setColor(new cc.Color3B( 255, 0, 0 ) );
+        this.timeLabel.setPosition( cc.p( 525, 525 ) );
+        this.addChild( this.timeLabel );
 
         // this._super( new cc.Color4B( 127, 127, 127, 255 ) );
         this.setPosition( new cc.Point( 0, 0 ) );
 
-        this.player = new Player( );
+        this.player = new Player( this );
         this.player.setPosition(cc.p( 300 , 35 ));
         this.addChild( this.player );
 
@@ -46,6 +50,11 @@ var GameLayer = cc.LayerColor.extend({
     updateScore: function( score ) {       
         this.score += score;
         this.scoreLabel.setString( this.score );
+    },
+
+    updateTime: function( time ) {
+        this.timeP -= 1;
+        this.timeLabel.setString( this.timeP );
     },
 
 

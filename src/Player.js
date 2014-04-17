@@ -1,9 +1,16 @@
 var Player = cc.Sprite.extend({ 
 
-	ctor: function( ){
+	ctor: function( gameLayer ){
 		this._super();
 		this.setAnchorPoint( cc.p( 0.5,0 ) );
 		this.standAction  = this.createStandAction();
+		var rotationAmount = 0;
+		this.schedule(function()
+            {
+                this.setRotation(rotationAmount++);
+                if(rotationAmount > 360)
+                    rotationAmount = 0;
+            });
 		this.runAction( this.standAction );
 		this.enemys = null;
 		this.maxLive = 10;
@@ -17,7 +24,15 @@ var Player = cc.Sprite.extend({
 		this.HEIGHT = 600;
 		this.maxAmmo = 10;
 		this.ammo = 10;
-		this.fireballArray = [];
+		this.gameLayer = gameLayer;
+
+		this.schedule(function() {
+			if( this.gameLayer.timeP > 0 && !this.end ){
+				this.gameLayer.updateTime();
+			}
+			else
+				this.end = true;
+		},1);
 
 		this.schedule(function() {
 			if(this.ammo < this.maxAmmo){
@@ -102,11 +117,6 @@ var Player = cc.Sprite.extend({
 			this.ammo -= 1;
 			this.ammoBar.setAmmo( ( this.ammo / this.maxAmmo ) * 100 );
 			this.spawnFireball();
-			
-
-			// for( var i = 0 ; i < this.enemys.length ; i++ ){
-			// 	this.enemys[i].isFired();
-			// }
 		}
 	},
 
