@@ -4,14 +4,10 @@ var EnemyFactory = cc.Node.extend({
 		this.player = player;
 	},
 
-	getEnemy: function( number ){
-		array = [];
-		for( var i = 0 ; i < number ; i++ ){
-			var enemy = new Enemy( this.player );
-			this.genPostion( enemy );
-			array.push( enemy );
-		}
-		return array;
+	getEnemy: function( ){
+		var enemy = new Enemy( this.player );
+		this.genPostion( enemy );
+		return enemy;
 	},
 
 	genPostion: function( enemy ){

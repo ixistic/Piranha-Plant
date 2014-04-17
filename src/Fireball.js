@@ -20,6 +20,7 @@ var Fireball = cc.Sprite.extend({
 		for( var i = 0 ; i < this.player.enemys.length ; i++ ){
 			this.isHit( this.player.enemys[i] );
 		}
+		// console.log(this.player.enemys.length);
 		this.move();
 	},
 
@@ -49,7 +50,7 @@ var Fireball = cc.Sprite.extend({
 	isHit: function( enemy ){
 		var posE = enemy.getPosition();
 		var posF = this.getPosition();
-		if(posE.x <= posF.x + 50 && posE.x >= posF.x - 50 && posE.y <= posF.y + 150 && posE.y >= posF.y - 150){
+		if(posE.x <= posF.x + 50 && posE.x >= posF.x - 50 && posE.y <= posF.y + 50 && posE.y >= posF.y - 50){
 			console.log("Hitttt");
 			enemy.isFired();
 			this.removeFromParent( true );

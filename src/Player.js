@@ -5,7 +5,7 @@ var Player = cc.Sprite.extend({
 		this.setAnchorPoint( cc.p( 0.5,0.0 ) );
 		this.standAction  = this.createStandAction();
 		this.runAction( this.standAction );
-		this.enemys = null;
+		this.enemys = [];
 		this.maxLive = 10;
 		this.live = 10;
 		this.end = false;
