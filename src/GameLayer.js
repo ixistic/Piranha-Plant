@@ -43,9 +43,16 @@ var GameLayer = cc.LayerColor.extend({
         this.player.setMap( this.map );
         this.player.scheduleUpdate();
         this.setKeyboardEnabled( true );
+        this.setTouchEnabled( true );
+        this.schedule(this.update);
  
         return true;
     },
+
+    update:function(dt){
+    
+    },
+
 
     updateScore: function( score ) {       
         this.score += score;
@@ -57,6 +64,10 @@ var GameLayer = cc.LayerColor.extend({
         this.timeLabel.setString( this.timeP );
     },
 
+
+    onTouchesMoved:function( pTouch, pEvent ){
+        this.player.handleTouchMove( pTouch[0].getLocation() );
+    },
 
     onKeyDown: function( e ){
         switch ( e ) {

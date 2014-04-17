@@ -2,15 +2,8 @@ var Player = cc.Sprite.extend({
 
 	ctor: function( gameLayer ){
 		this._super();
-		this.setAnchorPoint( cc.p( 0.5,0 ) );
+		this.setAnchorPoint( cc.p( 0.5,0.0 ) );
 		this.standAction  = this.createStandAction();
-		var rotationAmount = 0;
-		this.schedule(function()
-            {
-                this.setRotation(rotationAmount++);
-                if(rotationAmount > 360)
-                    rotationAmount = 0;
-            });
 		this.runAction( this.standAction );
 		this.enemys = null;
 		this.maxLive = 10;
@@ -24,6 +17,7 @@ var Player = cc.Sprite.extend({
 		this.HEIGHT = 600;
 		this.maxAmmo = 10;
 		this.ammo = 10;
+		this.currentRotation = 0;
 		this.gameLayer = gameLayer;
 
 		this.schedule(function() {
@@ -125,8 +119,22 @@ var Player = cc.Sprite.extend({
 	},
 
 	update: function( dt ){
+		this.setRotation(this.currentRotation);
 		this.move();
 	},
+
+	
+
+    handleTouchMove: function( touchLocation ){
+        var angle = Math.atan2( touchLocation.x - 300, touchLocation.y - 100 );
+        angle = angle * ( 180 / Math.PI );
+        console.log(angle);
+        if( angle < -50 )
+        	angle = -50;
+        else if( angle > 50 )
+        	angle = 50;
+        this.currentRotation = angle;
+    }
 });
 
 Player.SPEED = 5;

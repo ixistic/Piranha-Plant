@@ -3,7 +3,7 @@ var Fireball = cc.Sprite.extend({
 	ctor: function( xP, yP, player, gameLayer ){
 		this._super();
 		this.sX = xP;
-		this.sY = yP;
+		this.sY = yP + 130;
 		this.player = player;
 		this.gameLayer = gameLayer;
 		this.standAction  = this.createStandAction();
