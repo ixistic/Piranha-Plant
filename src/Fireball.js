@@ -49,6 +49,7 @@ var Fireball = cc.Sprite.extend({
 		var posE = enemy.getPosition();
 		var posF = this.getPosition();
 		if(posE.x <= posF.x + 50 && posE.x >= posF.x - 50 && posE.y <= posF.y + 150 && posE.y >= posF.y - 150){
+			console.log("Hitttt");
 			enemy.isFired();
 			this.removeFromParent( true );
 		}

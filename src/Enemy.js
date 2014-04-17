@@ -3,7 +3,7 @@ var Enemy = cc.Sprite.extend({
 	ctor: function( player ){
 		this._super();
 		this.player = player;
-		this.HP = 3;
+		this.HP = 1;
 		this.sX = 0;
 		this.sY = 0;
 		this.standAction  = this.createStandAction();

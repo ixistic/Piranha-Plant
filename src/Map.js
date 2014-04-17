@@ -18,14 +18,6 @@ var Map = cc.Node.extend({
 			this.player.enemys = enemy;
 			this.spawnEnemy( Math.round( Math.random() * 3 ) );
 		}, delay);
-		// var enemy = this.factory.getEnemy( number );
-
-		// for( var i = 0 ; i < enemy.length ; i++ ){
-		// 	enemy[i].setPosition(cc.p(enemy[i].sX,enemy[i].sY));
-		// 	enemy[i].scheduleUpdate();
-		// 	this.addChild(enemy[i]);
-		// }
-		// this.player.enemys = enemy;
 	},
 
 	spawnFireball: function( x , y ){
