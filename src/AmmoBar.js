@@ -3,7 +3,7 @@ var AmmoBar = cc.Node.extend({
 	ctor: function() {
 		this.started = false;
 		this._super();
-		var size = 450;
+		var size = AmmoBar.SIZE;
 		this.DEFAULT_SCALE_X = ( size / 40.0 ) + 2;
 
 		this.hpBar = cc.Sprite.create( 'img/hp_green.png' );
@@ -27,3 +27,5 @@ var AmmoBar = cc.Node.extend({
 		this.hpBar.setScaleX( this.DEFAULT_SCALE_X * ( percent / 100 ) );
 	}
 });
+
+AmmoBar.SIZE = 450;

@@ -2,14 +2,14 @@ var Fireball = cc.Sprite.extend({
 
 	ctor: function( xP, yP, player, gameLayer ){
 		this._super();
-		this.sX = xP;
+		this.sX = xP - 15;
 		this.sY = yP + 130;
 		this.player = player;
 		this.gameLayer = gameLayer;
 		this.standAction  = this.createStandAction();
 		this.runAction( this.standAction );
-		this.damage = 1;
-		this.speed = 3;
+		this.damage = Fireball.DAMAGE;
+		this.speed = Fireball.SPEED;
 	},
 
 	update: function( dt ){
@@ -20,7 +20,6 @@ var Fireball = cc.Sprite.extend({
 		for( var i = 0 ; i < this.player.enemys.length ; i++ ){
 			this.isHit( this.player.enemys[i] );
 		}
-		// console.log(this.player.enemys.length);
 		this.move();
 	},
 
@@ -58,3 +57,6 @@ var Fireball = cc.Sprite.extend({
 		}
 	},
 });
+
+Fireball.DAMAGE = 1;
+Fireball.SPEED = 3;

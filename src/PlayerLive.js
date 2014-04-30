@@ -3,7 +3,7 @@ var PlayerLive = cc.Node.extend({
 	ctor: function() {
 		this.started = false;
 		this._super();
-		var size = 100;
+		var size = PlayerLive.SIZE;
 		this.DEFAULT_SCALE_X = ( size / 40.0 ) + 2;
 
 		this.hpBar = cc.Sprite.create( 'img/hp_green.png' );
@@ -26,3 +26,5 @@ var PlayerLive = cc.Node.extend({
 		this.hpBar.setScaleX( this.DEFAULT_SCALE_X * ( percent / 100 ) );
 	}
 });
+
+PlayerLive.SIZE = 100;

@@ -5,16 +5,15 @@ var EnemyFactory = cc.Node.extend({
 	},
 
 	getEnemy: function( ){
-		var genType = Math.round( Math.random() * 2 );
-
-		var enemy = new Enemy( this.player , genType );
+		var generateType = Math.round( Math.random() * 2 );
+		var enemy = new Enemy( this.player , generateType );
 		this.genPostion( enemy );
 		return enemy;
 	},
 
 	genPostion: function( enemy ){
 		enemy.sX = Math.round( Math.random() * 500 );
-		enemy.sY = 500;
+		enemy.sY = 700;
 		console.log( "sX : " + enemy.sX + " sY : " + enemy.sY );
 	}
 });

@@ -5,7 +5,7 @@ var Map = cc.Node.extend({
 		this.player = player;
 		this.factory = factory;
 		this.gameLayer = gameLayer;
-		this.spawnEnemy( 3 );
+		this.spawnEnemy( Map.DELAY );
 	},
 
 	spawnEnemy: function( delay ){
@@ -15,7 +15,8 @@ var Map = cc.Node.extend({
 			enemy.scheduleUpdate();
 			this.addChild( enemy , 50 );
 			this.player.enemys.push( enemy );
-			this.spawnEnemy( Math.round( Math.random() * 3 ) );
+			var randomTime = Math.round( Math.random() * 3 );
+			this.spawnEnemy( randomTime );
 			if( this.player.end )
 				this.getScheduler().unscheduleAllCallbacksForTarget( this );
 		}, delay);
@@ -30,3 +31,4 @@ var Map = cc.Node.extend({
 
 });
 
+Map.DELAY = 3;

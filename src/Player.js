@@ -6,26 +6,26 @@ var Player = cc.Sprite.extend({
 		this.standAction  = this.createStandAction();
 		this.runAction( this.standAction );
 		this.enemys = [];
-		this.maxLive = 10;
-		this.live = 10;
-		this.end = false;
+		this.maxLive = Player.MAXLIFE;
+		this.live = Player.MAXLIFE;
+		this.endGame = false;
 		this.vX = 0;
 		this.keyLeft = false;
 		this.keyRight = false;
 		this.keySpace = false;
 		this.WIDTH = 600;
 		this.HEIGHT = 600;
-		this.maxAmmo = 100;
-		this.ammo = 100;
+		this.maxAmmo = Player.MAXAMMO;
+		this.ammo = Player.MAXAMMO;
 		this.currentRotation = 0;
 		this.gameLayer = gameLayer;
 
 		this.schedule(function() {
-			if( this.gameLayer.timeP > 0 && !this.end ){
+			if( this.gameLayer.timeP > 0 && !this.endGame ){
 				this.gameLayer.updateTime(-1);
 			}
 			else
-				this.end = true;
+				this.endGame = true;
 		},1);
 
 		this.schedule(function() {
@@ -33,7 +33,7 @@ var Player = cc.Sprite.extend({
 				this.ammo += 1;
 				this.ammoBar.setAmmo( ( this.ammo / this.maxAmmo ) * 100 );
 			}
-		},3);
+		},2);
 
 	},
 
@@ -63,8 +63,9 @@ var Player = cc.Sprite.extend({
 		if( this.live > 0 ){
 			this.live -= damage;
 			if( this.live <= 0 ){
-				this.end = true;
+				this.endGame = true;
 				this.gameLayer.updateTime(0);
+				this.live = 0;
 			}
 			this.liveBar.setLive( ( this.live / this.maxLive ) * 100 );
 		}
@@ -137,4 +138,6 @@ var Player = cc.Sprite.extend({
     }
 });
 
-Player.SPEED = 5;
+Player.MAXAMMO = 100;
+Player.MAXLIFE = 10;
+Player.SPEED = 8;
