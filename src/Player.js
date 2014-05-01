@@ -6,6 +6,7 @@ var Player = cc.Sprite.extend({
 		this.standAction  = this.createStandAction();
 		this.runAction( this.standAction );
 		this.enemys = [];
+		this.items = [];
 		this.maxLive = Player.MAXLIFE;
 		this.live = Player.MAXLIFE;
 		this.endGame = false;
@@ -29,7 +30,7 @@ var Player = cc.Sprite.extend({
 		},1);
 
 		this.schedule(function() {
-			if(this.ammo < this.maxAmmo){
+			if(this.ammo < this.maxAmmo && !this.endGame ){
 				this.ammo += 1;
 				this.ammoBar.setAmmo( ( this.ammo / this.maxAmmo ) * 100 );
 			}
@@ -110,7 +111,7 @@ var Player = cc.Sprite.extend({
 
 	fire: function(  ){
 		console.log("Fire!!");
-		if( this.ammo > 0 && this.enemys != null){
+		if( this.ammo > 0 ){
 			this.ammo -= 1;
 			this.ammoBar.setAmmo( ( this.ammo / this.maxAmmo ) * 100 );
 			this.spawnFireball();
@@ -129,7 +130,7 @@ var Player = cc.Sprite.extend({
     handleTouchMove: function( touchLocation ){
         var angle = Math.atan2( touchLocation.x - 300, touchLocation.y - 100 );
         angle = angle * ( 180 / Math.PI );
-        console.log(angle);
+        // console.log(angle);
         if( angle < -50 )
         	angle = -50;
         else if( angle > 50 )

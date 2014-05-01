@@ -19,7 +19,9 @@
             'src/Enemy.js',
             'src/EnemyFactory.js', 
             'src/Fireball.js',
-            'src/AmmoBar.js',  //add your own files in order here
+            'src/AmmoBar.js',
+            'src/Item.js',
+            'src/ItemFactory.js',  //add your own files in order here
         ]
     };
 

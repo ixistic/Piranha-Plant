@@ -14,6 +14,6 @@ var EnemyFactory = cc.Node.extend({
 	genPostion: function( enemy ){
 		enemy.sX = Math.round( Math.random() * 500 );
 		enemy.sY = 700;
-		console.log( "sX : " + enemy.sX + " sY : " + enemy.sY );
+		// console.log( "sX : " + enemy.sX + " sY : " + enemy.sY );
 	}
 });

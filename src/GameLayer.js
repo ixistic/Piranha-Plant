@@ -19,15 +19,21 @@ var GameLayer = cc.LayerColor.extend({
         this.timeLabel.setPosition( cc.p( 525, 525 ) );
         this.addChild( this.timeLabel );
 
+        // this.coinLabel = cc.LabelTTF.create( '  x  0', 'Arial', 30 );
+        // this.coinLabel.setPosition( new cc.Point( 90, 530 ) );
+        // this.coinLabel.enableStroke( new cc.Color3B( 0, 0, 0 ), 3 );
+        // this.addChild( this.coinLabel, 4 );
+
         this.setPosition( new cc.Point( 0, 0 ) );
 
         this.player = new Player( this );
         this.player.setPosition(cc.p( 300 , 35 ));
-        this.addChild( this.player );
+        this.addChild( this.player , 500 );
 
-        this.factory = new EnemyFactory( this.player );
+        this.enemyFactory = new EnemyFactory( this.player );
+        this.itemFactory = new ItemFactory( this.player );
 
-        this.map = new Map( this.player, this.factory, this );
+        this.map = new Map( this.player, this.enemyFactory, this.itemFactory, this );
         this.addChild( this.map );
 
         this.playerLive = new PlayerLive();
@@ -42,8 +48,10 @@ var GameLayer = cc.LayerColor.extend({
         this.player.setAmmoBar( this.ammoBar );
         this.player.setMap( this.map );
         this.player.scheduleUpdate();
+
         this.setKeyboardEnabled( true );
         this.setTouchEnabled( true );
+        this.setMouseEnabled( true );
         this.schedule(this.update);
  
         return true;
@@ -70,6 +78,25 @@ var GameLayer = cc.LayerColor.extend({
     onTouchesMoved:function( pTouch, pEvent ){
         this.player.handleTouchMove( pTouch[0].getLocation() );
     },
+
+    onMouseMoved: function( e ) {
+        this.player.handleTouchMove( e.getLocation() );
+    },
+
+    // onMouseUp: function( e ) {
+    //     this.onDrag = false;
+    // },
+
+    // onMouseDown: function( e ) {
+
+    //     var mousePosition = e.getLocation();
+    //     var uiPosition = this.getPosition();
+    //     if ( this.isEventHappenInArea( mousePosition, uiPosition ) ) {
+    //         console.log("CLICK!");
+    //         this.onDrag = true;
+    //         this.offsetPosition = new cc.Point( mousePosition.x - uiPosition.x, mousePosition.y - uiPosition.y );
+    //     }
+    // },
 
     onKeyDown: function( e ){
         switch ( e ) {
