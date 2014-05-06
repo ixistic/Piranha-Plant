@@ -35,13 +35,13 @@ var Item = cc.Sprite.extend({
 	createStandAction: function() {
 		var animation = new cc.Animation.create();
 		if( this.numType == 0 ){
-			animation.addSpriteFrameWithFile( 'img/item_a1.png' );
+			animation.addSpriteFrameWithFile( 'img/item/item_a1.png' );
 		}
 		else if( this.numType == 1 ){
-			animation.addSpriteFrameWithFile( 'img/item_b1.png' );
+			animation.addSpriteFrameWithFile( 'img/item/item_b1.png' );
 		}
 		else if( this.numType == 2 ){
-			animation.addSpriteFrameWithFile( 'img/item_c1.png' );
+			animation.addSpriteFrameWithFile( 'img/item/item_c1.png' );
 		}
 		animation.setDelayPerUnit( 0.3 );
 		return cc.RepeatForever.create( cc.Animate.create( animation ) );

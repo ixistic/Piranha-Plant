@@ -35,19 +35,19 @@ var Enemy = cc.Sprite.extend({
 	createStandAction: function() {
 		var animation = new cc.Animation.create();
 		if( this.numType == 0 ){
-			animation.addSpriteFrameWithFile( 'img/mario_a1.png' );
-			animation.addSpriteFrameWithFile( 'img/mario_a2.png' );
-			animation.addSpriteFrameWithFile( 'img/mario_a3.png' );
+			animation.addSpriteFrameWithFile( 'img/enemy/mario_a1.png' );
+			animation.addSpriteFrameWithFile( 'img/enemy/mario_a2.png' );
+			animation.addSpriteFrameWithFile( 'img/enemy/mario_a3.png' );
 		}
 		else if( this.numType == 1 ){
-			animation.addSpriteFrameWithFile( 'img/mario_b1.png' );
-			animation.addSpriteFrameWithFile( 'img/mario_b2.png' );
-			animation.addSpriteFrameWithFile( 'img/mario_b3.png' );
+			animation.addSpriteFrameWithFile( 'img/enemy/mario_b1.png' );
+			animation.addSpriteFrameWithFile( 'img/enemy/mario_b2.png' );
+			animation.addSpriteFrameWithFile( 'img/enemy/mario_b3.png' );
 		}
 		else if( this.numType == 2 ){
-			animation.addSpriteFrameWithFile( 'img/mario_c1.png' );
-			animation.addSpriteFrameWithFile( 'img/mario_c2.png' );
-			animation.addSpriteFrameWithFile( 'img/mario_c3.png' );
+			animation.addSpriteFrameWithFile( 'img/enemy/mario_c1.png' );
+			animation.addSpriteFrameWithFile( 'img/enemy/mario_c2.png' );
+			animation.addSpriteFrameWithFile( 'img/enemy/mario_c3.png' );
 		}
 		animation.setDelayPerUnit( 0.3 );
 		return cc.RepeatForever.create( cc.Animate.create( animation ) );

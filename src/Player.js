@@ -21,28 +21,35 @@ var Player = cc.Sprite.extend({
 		this.currentRotation = 0;
 		this.gameLayer = gameLayer;
 
-		this.schedule(function() {
-			if( this.gameLayer.timeP > 0 && !this.endGame ){
-				this.gameLayer.updateTime(-1);
-			}
-			else
-				this.endGame = true;
-		},1);
+		// this.clock();
+		this.refillAmmo( 2 );
 
+	},
+
+	refillAmmo: function( delay ){
 		this.schedule(function() {
 			if(this.ammo < this.maxAmmo && !this.endGame ){
 				this.ammo += 1;
 				this.ammoBar.setAmmo( ( this.ammo / this.maxAmmo ) * 100 );
 			}
-		},2);
-
+		}, delay );
 	},
+
+	// clock: function(){
+	// 	this.schedule(function() {
+	// 		if( this.gameLayer.timeP > 0 && !this.endGame ){
+	// 			this.gameLayer.updateTime(-1);
+	// 		}
+	// 		else
+	// 			this.endGame = true;
+	// 	},1);
+	// },
 
 	createStandAction: function(){
 		var animation = new cc.Animation.create();
-		animation.addSpriteFrameWithFile( 'img/player_a1.png' );
-		animation.addSpriteFrameWithFile( 'img/player_a2.png' );
-		animation.addSpriteFrameWithFile( 'img/player_a3.png' );
+		animation.addSpriteFrameWithFile( 'img/player/player_a1.png' );
+		animation.addSpriteFrameWithFile( 'img/player/player_a2.png' );
+		animation.addSpriteFrameWithFile( 'img/player/player_a3.png' );
 		animation.setDelayPerUnit( 0.5 );
 		return cc.RepeatForever.create( cc.Animate.create( animation ) );
 	},

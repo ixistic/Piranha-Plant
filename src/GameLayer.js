@@ -3,51 +3,21 @@ var GameLayer = cc.LayerColor.extend({
     init: function() {
 
         this._super();
-        this.background = cc.Sprite.create ( 'img/bg.png' );
-        this.background.setAnchorPoint( new cc.Point( 0, 0 ) );
-        this.addChild( this.background, 0 );
-
-        this.score = 0;
-        this.scoreLabel = cc.LabelTTF.create( '0', 'Arial', 32 );
-        this.scoreLabel.setColor(new cc.Color3B( 0, 200, 0 ) );
-        this.scoreLabel.setPosition( cc.p( 525, 100 ) );
-        this.addChild( this.scoreLabel );
-
-        this.timeP = 60;
-        this.timeLabel = cc.LabelTTF.create( '60', 'Arial', 32 );
-        this.timeLabel.setColor(new cc.Color3B( 255, 0, 0 ) );
-        this.timeLabel.setPosition( cc.p( 525, 525 ) );
-        this.addChild( this.timeLabel );
+        this.setPosition( new cc.Point( 0, 0 ) );
+        this.initBackground();
+        this.initPlayerLiveBar();
+        this.initAmmoBar();
+        this.initPlayer();
+        this.initClock();
+        this.initScore();
+        this.initEnemy();
+        this.initItem();
+        this.initMap();
 
         // this.coinLabel = cc.LabelTTF.create( '  x  0', 'Arial', 30 );
         // this.coinLabel.setPosition( new cc.Point( 90, 530 ) );
         // this.coinLabel.enableStroke( new cc.Color3B( 0, 0, 0 ), 3 );
         // this.addChild( this.coinLabel, 4 );
-
-        this.setPosition( new cc.Point( 0, 0 ) );
-
-        this.player = new Player( this );
-        this.player.setPosition(cc.p( 300 , 35 ));
-        this.addChild( this.player , 500 );
-
-        this.enemyFactory = new EnemyFactory( this.player );
-        this.itemFactory = new ItemFactory( this.player );
-
-        this.map = new Map( this.player, this.enemyFactory, this.itemFactory, this );
-        this.addChild( this.map );
-
-        this.playerLive = new PlayerLive();
-        this.playerLive.setPosition( cc.p( 30, 50 ) );
-        this.addChild( this.playerLive );
-
-        this.ammoBar = new AmmoBar();
-        this.ammoBar.setPosition( cc.p( 30, 550 ) );
-        this.addChild( this.ammoBar );
-
-        this.player.setLiveBar( this.playerLive );
-        this.player.setAmmoBar( this.ammoBar );
-        this.player.setMap( this.map );
-        this.player.scheduleUpdate();
 
         this.setKeyboardEnabled( true );
         this.setTouchEnabled( true );
@@ -74,8 +44,72 @@ var GameLayer = cc.LayerColor.extend({
         this.timeLabel.setString( this.timeP );
     },
 
+    initBackground: function(){
+        this.background = cc.Sprite.create ( 'img/bg.png' );
+        this.background.setAnchorPoint( new cc.Point( 0, 0 ) );
+        this.addChild( this.background, 0 );
+    },
 
-    onTouchesMoved:function( pTouch, pEvent ){
+    initScore: function(){
+        this.score = 0;
+        this.scoreLabel = cc.LabelTTF.create( '0', 'Arial', 32 );
+        this.scoreLabel.setColor(new cc.Color3B( 0, 200, 0 ) );
+        this.scoreLabel.setPosition( cc.p( 525, 100 ) );
+        this.addChild( this.scoreLabel );
+    },
+
+    initClock: function(){
+        this.timeP = 60;
+        this.timeLabel = cc.LabelTTF.create( '60', 'Arial', 32 );
+        this.timeLabel.setColor(new cc.Color3B( 255, 0, 0 ) );
+        this.timeLabel.setPosition( cc.p( 525, 525 ) );
+        this.addChild( this.timeLabel );
+
+        this.schedule(function() {
+            if( this.timeP > 0 && !this.player.endGame ){
+                this.updateTime(-1);
+            }
+            else
+                this.player.endGame = true;
+        },1);
+    },
+
+    initEnemy: function() {
+        this.enemyFactory = new EnemyFactory( this.player );
+    },
+
+    initPlayerLiveBar: function() {
+        this.playerLive = new PlayerLive();
+        this.playerLive.setPosition( cc.p( 30, 50 ) );
+        this.addChild( this.playerLive );
+    },
+
+    initAmmoBar: function() {
+        this.ammoBar = new AmmoBar();
+        this.ammoBar.setPosition( cc.p( 30, 550 ) );
+        this.addChild( this.ammoBar );
+    },
+
+    initPlayer: function() {
+        this.player = new Player( this );
+        this.player.setPosition(cc.p( 300 , 35 ));
+        this.addChild( this.player , 500 );
+        this.player.setLiveBar( this.playerLive );
+        this.player.setAmmoBar( this.ammoBar );
+        this.player.scheduleUpdate();
+    },
+
+    initItem: function() {
+        this.itemFactory = new ItemFactory( this.player );
+    },
+
+    initMap: function() {
+        this.map = new Map( this.player, this.enemyFactory, this.itemFactory, this );
+        this.addChild( this.map );
+        this.player.setMap( this.map );
+    },
+
+    onTouchesMoved: function( pTouch, pEvent ){
         this.player.handleTouchMove( pTouch[0].getLocation() );
     },
 
