@@ -8,7 +8,6 @@ var ItemFactory = cc.Node.extend({
 		var generateType = Math.round( Math.random() * 2 );
 		var item = new Item( this.player , generateType );
 		this.generatePosition( item );
-		console.log("ffff");
 		return item;
 	},
 

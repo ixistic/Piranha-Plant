@@ -19,12 +19,11 @@ var Enemy = cc.Sprite.extend({
 
 	update: function( dt ){
 		var pos = this.getPosition();
-		if( pos.y <= 30 ) {
+		if( pos.y <= 35 ) {
 			this.fall();
 			this.removeFromParent( true );
 		}
 		this.move();
-		this.isHit();
 	},
 
 	move: function(){
@@ -56,7 +55,7 @@ var Enemy = cc.Sprite.extend({
 	isFired: function(){
 		this.hp -= 1;
 		if( this.hp <= 0 ) {
-			this.setPosition( 0 , 0 );
+			this.setPosition( -50 , -50 );
 			this.removeFromParent( true );
 		}
 	},
@@ -65,11 +64,4 @@ var Enemy = cc.Sprite.extend({
 		this.player.attacked( this.damage );
 	},
 
-	isHit: function(){
-		// var posP = this.player.getPosition();
-		// var posE = this.getPosition();
-		// if(posP.x <= posE.x + 50 && posP.x >= posE.x - 50 && posP.y <= posE.y + 150 && posP.y >= posE.y - 150){
-		// 	this.removeFromParent( true );
-		// }
-	},
 });

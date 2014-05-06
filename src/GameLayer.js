@@ -13,6 +13,7 @@ var GameLayer = cc.LayerColor.extend({
         this.initEnemy();
         this.initItem();
         this.initMap();
+        this.initSound();
 
         // this.coinLabel = cc.LabelTTF.create( '  x  0', 'Arial', 30 );
         // this.coinLabel.setPosition( new cc.Point( 90, 530 ) );
@@ -28,7 +29,7 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     update:function(dt){
-    
+
     },
 
     updateScore: function( score ) {       
@@ -66,11 +67,11 @@ var GameLayer = cc.LayerColor.extend({
         this.addChild( this.timeLabel );
 
         this.schedule(function() {
-            if( this.timeP > 0 && !this.player.endGame ){
+            if( this.timeP > 0 ){
                 this.updateTime(-1);
             }
             else
-                this.player.endGame = true;
+                this.endGame();
         },1);
     },
 
@@ -81,13 +82,13 @@ var GameLayer = cc.LayerColor.extend({
     initPlayerLiveBar: function() {
         this.playerLive = new PlayerLive();
         this.playerLive.setPosition( cc.p( 30, 50 ) );
-        this.addChild( this.playerLive );
+        this.addChild( this.playerLive , 1000);
     },
 
     initAmmoBar: function() {
         this.ammoBar = new AmmoBar();
         this.ammoBar.setPosition( cc.p( 30, 550 ) );
-        this.addChild( this.ammoBar );
+        this.addChild( this.ammoBar , 1000);
     },
 
     initPlayer: function() {
@@ -109,20 +110,23 @@ var GameLayer = cc.LayerColor.extend({
         this.player.setMap( this.map );
     },
 
-    onTouchesMoved: function( pTouch, pEvent ){
-        this.player.handleTouchMove( pTouch[0].getLocation() );
+    initSound: function() {
+        cc.AudioEngine.getInstance().playMusic( 'sound/soundBg_1.mp3', true );
     },
 
-    onMouseMoved: function( e ) {
-        this.player.handleTouchMove( e.getLocation() );
-    },
+    // onTouchesMoved: function( pTouch, pEvent ){
+    //     this.player.handleTouchMove( pTouch[0].getLocation() );
+    // },
+
+    // onMouseMoved: function( e ) {
+    //     this.player.handleTouchMove( e.getLocation() );
+    // },
 
     // onMouseUp: function( e ) {
     //     this.onDrag = false;
     // },
 
     // onMouseDown: function( e ) {
-
     //     var mousePosition = e.getLocation();
     //     var uiPosition = this.getPosition();
     //     if ( this.isEventHappenInArea( mousePosition, uiPosition ) ) {
@@ -159,7 +163,24 @@ var GameLayer = cc.LayerColor.extend({
         if ( e == cc.KEY.left ) {
             this.player.stopLeft();
         }
-    }
+    },
+
+    endGame: function() {
+        this.map.unscheduleUpdate();
+        var message = "Your score is "+this.score+" ! \n\n\"OK\" Restart ";
+        alert(message);
+        this.restart();
+        // var menu = confirm("Your score is "+this.score+" ! \n\n\"OK\" Restart ");
+        // if(menu){
+        //     var director = cc.Director.getInstance();
+        //     director.replaceScene(cc.TransitionFade.create(1.5, new StartScene()));
+        // }
+    },
+
+    restart: function() {
+        var director = cc.Director.getInstance();
+        director.replaceScene(cc.TransitionFade.create(1.5, new StartScene()));
+    },
 });
 
 var StartScene = cc.Scene.extend({

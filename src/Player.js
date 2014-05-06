@@ -9,7 +9,6 @@ var Player = cc.Sprite.extend({
 		this.items = [];
 		this.maxLive = Player.MAXLIFE;
 		this.live = Player.MAXLIFE;
-		this.endGame = false;
 		this.vX = 0;
 		this.keyLeft = false;
 		this.keyRight = false;
@@ -28,22 +27,12 @@ var Player = cc.Sprite.extend({
 
 	refillAmmo: function( delay ){
 		this.schedule(function() {
-			if(this.ammo < this.maxAmmo && !this.endGame ){
+			if(this.ammo < this.maxAmmo ){
 				this.ammo += 1;
 				this.ammoBar.setAmmo( ( this.ammo / this.maxAmmo ) * 100 );
 			}
 		}, delay );
 	},
-
-	// clock: function(){
-	// 	this.schedule(function() {
-	// 		if( this.gameLayer.timeP > 0 && !this.endGame ){
-	// 			this.gameLayer.updateTime(-1);
-	// 		}
-	// 		else
-	// 			this.endGame = true;
-	// 	},1);
-	// },
 
 	createStandAction: function(){
 		var animation = new cc.Animation.create();
@@ -71,11 +60,12 @@ var Player = cc.Sprite.extend({
 		if( this.live > 0 ){
 			this.live -= damage;
 			if( this.live <= 0 ){
-				this.endGame = true;
-				this.gameLayer.updateTime(0);
 				this.live = 0;
+				this.liveBar.setLive( ( this.live / this.maxLive ) * 100 );
+				this.gameLayer.endGame();
 			}
-			this.liveBar.setLive( ( this.live / this.maxLive ) * 100 );
+			else
+				this.liveBar.setLive( ( this.live / this.maxLive ) * 100 );
 		}
 	},
 

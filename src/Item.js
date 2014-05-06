@@ -8,13 +8,6 @@ var Item = cc.Sprite.extend({
 		this.numType = numType;
 		this.standAction  = this.createStandAction();
 		this.runAction( this.standAction );
-		this.listItem = [
-		"103",
-		"103",
-		"103"];
-		this.hp = this.listItem[this.numType][0];
-		this.damage = this.listItem[this.numType][1];
-		this.speed = this.listItem[this.numType][2];
 	},
 
 	update: function( dt ){
@@ -24,7 +17,6 @@ var Item = cc.Sprite.extend({
 			this.removeFromParent( true );
 		}
 		this.move();
-		this.isHit();
 	},
 
 	move: function(){
@@ -48,22 +40,12 @@ var Item = cc.Sprite.extend({
     },
 
 	isFired: function(){
-		this.hp -= 1;
-		if( this.hp <= 0 ) {
-			this.setPosition( 0 , 0 );
-			this.removeFromParent( true );
-		}
+		this.setPosition( -50 , -50 );
+		this.removeFromParent( true );
 	},
 
 	fall: function(){
 		this.player.attacked( this.damage );
 	},
 
-	isHit: function(){
-		// var posP = this.player.getPosition();
-		// var posE = this.getPosition();
-		// if(posP.x <= posE.x + 50 && posP.x >= posE.x - 50 && posP.y <= posE.y + 150 && posP.y >= posE.y - 150){
-		// 	this.removeFromParent( true );
-		// }
-	},
 });

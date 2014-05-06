@@ -19,23 +19,21 @@ var Map = cc.Node.extend({
 			this.player.enemys.push( enemy );
 			var randomTime = Math.round( Math.random() * 5 );
 			this.spawnEnemy( randomTime );
-			if( this.player.live == 0 )
-				this.getScheduler().unscheduleAllCallbacksForTarget( this );
 		}, 1);
 	},
 
 	spawnItem: function( ){
 		this.scheduleOnce(function(){
-			console.log("do")
 			var item = this.itemFactory.getItem();
 			item.setPosition( cc.p( item.sX, item.sY ) );
+			console.log(item.sX + " " + item.sY);
 			item.scheduleUpdate();
 			this.addChild( item , 60 );
 			this.player.items.push( item );
-			var randomTime = Math.round( Math.random() * 1 );
-			this.spawnEnemy( randomTime );
-			if( this.player.live == 0 )
-				this.getScheduler().unscheduleAllCallbacksForTarget( this );
+			var randomTime = Math.round( Math.random() * 5 );
+			this.spawnItem( randomTime );
+			// if( this.player.endGame )
+			// 	this.getScheduler().unscheduleAllCallbacksForTarget( this );
 		}, 1);
 	},
 

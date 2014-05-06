@@ -3,7 +3,7 @@ var Fireball = cc.Sprite.extend({
 	ctor: function( xP, yP, player, gameLayer ){
 		this._super();
 		this.sX = xP - 15;
-		this.sY = yP + 130;
+		this.sY = yP + 60;
 		this.player = player;
 		this.gameLayer = gameLayer;
 		this.standAction  = this.createStandAction();
@@ -18,7 +18,10 @@ var Fireball = cc.Sprite.extend({
 			this.overRange();
 		}
 		for( var i = 0 ; i < this.player.enemys.length ; i++ ){
-			this.isHit( this.player.enemys[i] );
+			this.isHitEnemy( this.player.enemys[i] );
+		}
+		for( var j = 0 ; j < this.player.items.length ; j++ ){
+			this.isHitItem( this.player.items[j] );
 		}
 		this.move();
 	},
@@ -46,16 +49,30 @@ var Fireball = cc.Sprite.extend({
 		this.removeFromParent( true );
 	},
 
-	isHit: function( enemy ){
-		var posE = enemy.getPosition();
-		var posF = this.getPosition();
-		if(posE.x <= posF.x + 50 && posE.x >= posF.x - 50 && posE.y <= posF.y + 50 && posE.y >= posF.y - 50){
-			console.log("Hitttt");
+	isHitEnemy: function( enemy ){
+		var boxEnemy = enemy.getBoundingBoxToWorld();
+		var boxFireBall = this.getBoundingBoxToWorld();
+
+		if(cc.rectOverlapsRect(boxEnemy,boxFireBall)){
+			console.log("fireball hit enemy");
 			enemy.isFired();
 			this.removeFromParent( true );
 			this.gameLayer.updateScore( 1 );
 		}
 	},
+
+	isHitItem: function( item ){
+		var boxItem = item.getBoundingBoxToWorld();
+		var boxFireBall = this.getBoundingBoxToWorld();
+
+		if(cc.rectOverlapsRect(boxItem,boxFireBall)){
+			console.log("fireball hit item");
+			item.isFired();
+			this.removeFromParent( true );
+			this.gameLayer.updateScore( 1 );
+		}
+	},
+
 });
 
 Fireball.DAMAGE = 1;
