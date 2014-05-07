@@ -55,9 +55,12 @@ var Fireball = cc.Sprite.extend({
 
 		if(cc.rectOverlapsRect(boxEnemy,boxFireBall)){
 			console.log("fireball hit enemy");
+			// this.initWithFile( 'images/obstacle_bomb.png' );
 			enemy.isFired();
-			this.removeFromParent( true );
 			this.gameLayer.updateScore( 1 );
+			this.speed = 0;
+			this.setPosition( -50, -50 );
+			this.removeFromParent( true );			
 		}
 	},
 

@@ -26,7 +26,7 @@ var Map = cc.Node.extend({
 		this.scheduleOnce(function(){
 			var item = this.itemFactory.getItem();
 			item.setPosition( cc.p( item.sX, item.sY ) );
-			console.log(item.sX + " " + item.sY);
+			// console.log(item.sX + " " + item.sY);
 			item.scheduleUpdate();
 			this.addChild( item , 60 );
 			this.player.items.push( item );

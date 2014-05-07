@@ -8,6 +8,7 @@ var Item = cc.Sprite.extend({
 		this.numType = numType;
 		this.standAction  = this.createStandAction();
 		this.runAction( this.standAction );
+		this.speed = 3;
 	},
 
 	update: function( dt ){
@@ -27,13 +28,13 @@ var Item = cc.Sprite.extend({
 	createStandAction: function() {
 		var animation = new cc.Animation.create();
 		if( this.numType == 0 ){
-			animation.addSpriteFrameWithFile( 'img/item/item_a1.png' );
+			animation.addSpriteFrameWithFile( 'img/item/item_unlimit.png' );
 		}
 		else if( this.numType == 1 ){
-			animation.addSpriteFrameWithFile( 'img/item/item_b1.png' );
+			animation.addSpriteFrameWithFile( 'img/item/item_bomb.png' );
 		}
 		else if( this.numType == 2 ){
-			animation.addSpriteFrameWithFile( 'img/item/item_c1.png' );
+			animation.addSpriteFrameWithFile( 'img/item/item_time.png' );
 		}
 		animation.setDelayPerUnit( 0.3 );
 		return cc.RepeatForever.create( cc.Animate.create( animation ) );
