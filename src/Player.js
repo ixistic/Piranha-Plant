@@ -23,7 +23,8 @@ var Player = cc.Sprite.extend({
 		for( var i = 10 ; i < 510 ; i++ ){
 			this.keepPosX[i] = false;
 		}
-		this.refillAmmo( 2 );
+		this.unlimitMode = false;
+		this.refillAmmo( 3 );
 
 	},
 
@@ -113,12 +114,15 @@ var Player = cc.Sprite.extend({
 	},
 
 	fire: function(  ){
-		console.log("Fire!!");
-		if( this.ammo > 0 ){
-			this.ammo -= 1;
-			this.ammoBar.setAmmo( ( this.ammo / this.maxAmmo ) * 100 );
-			this.spawnFireball();
+		if( !this.unlimitMode ) {
+			if( this.ammo > 0 ){
+				this.ammo -= 1;
+				this.ammoBar.setAmmo( ( this.ammo / this.maxAmmo ) * 100 );
+				this.spawnFireball();
+			}
 		}
+		else
+			this.spawnFireball();
 	},
 
 	setMap: function( map ){
@@ -142,6 +146,6 @@ var Player = cc.Sprite.extend({
     }
 });
 
-Player.MAXAMMO = 100;
+Player.MAXAMMO = 50;
 Player.MAXLIFE = 5;
 Player.SPEED = 8;

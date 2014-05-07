@@ -42,6 +42,20 @@ var Item = cc.Sprite.extend({
     },
 
 	isFired: function(){
+		if( this.numType == 0 ) {
+			this.player.unlimitMode = true;
+			this.scheduleOnce( function() {
+				this.player.unlimitMode = false;
+				console.log("doooo");
+			}, 3);
+		}
+		else if( this.numType == 1 ) {
+
+		}
+		else if( this.numType == 2 ) {
+
+		}
+
 		if( !this.glowing ) {
 			this.glowing = true;
 			this.glowAction = this.createGlowAction( );

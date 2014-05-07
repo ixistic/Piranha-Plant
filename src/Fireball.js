@@ -59,7 +59,7 @@ var Fireball = cc.Sprite.extend({
 			enemy.isFired();
 			this.gameLayer.updateScore( 1 );
 			this.speed = 0;
-			this.setPosition( -50, -50 );
+			this.setPosition( -100, -100 );
 			this.removeFromParent( true );			
 		}
 	},
@@ -71,8 +71,9 @@ var Fireball = cc.Sprite.extend({
 		if(cc.rectOverlapsRect(boxItem,boxFireBall)){
 			console.log("fireball hit item");
 			item.isFired();
+			this.setPosition( -100, -100 );
 			this.removeFromParent( true );
-			this.gameLayer.updateScore( 1 );
+			// this.gameLayer.updateScore( 1 );
 		}
 	},
 
