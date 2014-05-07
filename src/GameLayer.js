@@ -34,7 +34,18 @@ var GameLayer = cc.LayerColor.extend({
 
     updateScore: function( score ) {       
         this.score += score;
-        this.scoreLabel.setString( this.score );
+        var tmp = ""
+        if(this.score < 10) 
+            tmp = "Score : 0000" + this.score;
+        else if(this.score < 100) 
+            tmp = "Score : 000" + this.score;
+        else if(this.score < 1000) 
+            tmp = "Score : 00" + this.score;
+        else if(this.score < 10000) 
+            tmp = "Score : 0" + this.score;
+        else if(this.score < 100000) 
+            tmp = "Score : " + this.score;
+        this.scoreLabel.setString( tmp );
     },
 
     updateTime: function( time ) {
@@ -42,7 +53,12 @@ var GameLayer = cc.LayerColor.extend({
             this.timeP = 0;
         else
             this.timeP += time;
-        this.timeLabel.setString( this.timeP );
+        var tmp = ""
+        if(this.timeP < 10) 
+            tmp = "Time : 0" + this.timeP;
+        else if(this.timeP < 100) 
+            tmp = "Time : " + this.timeP;
+        this.timeLabel.setString( tmp );
     },
 
     initBackground: function(){
@@ -53,24 +69,26 @@ var GameLayer = cc.LayerColor.extend({
 
     initScore: function(){
         this.score = 0;
-        this.scoreLabel = cc.LabelTTF.create( '0', 'Arial', 32 );
-        this.scoreLabel.setColor(new cc.Color3B( 0, 200, 0 ) );
-        this.scoreLabel.setPosition( cc.p( 525, 100 ) );
-        this.addChild( this.scoreLabel );
+        this.scoreLabel = cc.LabelTTF.create( 'Score : 00000', 'Arial', 28 );
+        this.scoreLabel.setColor(new cc.Color3B( 255, 255, 255 ) );
+        this.scoreLabel.setPosition( cc.p( 475, 60 ) );
+        this.scoreLabel.enableStroke( new cc.Color3B( 0, 0, 0 ), 3 );
+        this.addChild( this.scoreLabel, 1000 );
     },
 
     initClock: function(){
         this.timeP = 60;
-        this.timeLabel = cc.LabelTTF.create( '60', 'Arial', 32 );
-        this.timeLabel.setColor(new cc.Color3B( 255, 0, 0 ) );
-        this.timeLabel.setPosition( cc.p( 525, 525 ) );
-        this.addChild( this.timeLabel );
+        this.timeLabel = cc.LabelTTF.create( 'Time : 60', 'Arial', 28 );
+        this.timeLabel.setColor(new cc.Color3B( 255, 255, 255 ) );
+        this.timeLabel.setPosition( cc.p( 500, 525 ) );
+        this.timeLabel.enableStroke( new cc.Color3B( 0, 0, 0 ), 3 );
+        this.addChild( this.timeLabel, 1000 );
 
         this.schedule(function() {
             if( this.timeP > 0 ){
-                this.updateTime(-1);
+                this.updateTime( -1 );
             }
-            else
+            else if( this.timeP == 0)
                 this.endGame();
         },1);
     },
@@ -168,7 +186,7 @@ var GameLayer = cc.LayerColor.extend({
     endGame: function() {
         this.map.unscheduleUpdate();
         var message = "Your score is "+this.score+" ! \n\n\"OK\" Restart ";
-        alert(message);
+        alert( message );
         this.restart();
         // var menu = confirm("Your score is "+this.score+" ! \n\n\"OK\" Restart ");
         // if(menu){

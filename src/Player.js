@@ -59,10 +59,13 @@ var Player = cc.Sprite.extend({
 	attacked: function( damage ){
 		if( this.live > 0 ){
 			this.live -= damage;
+			console.log(this.life);
 			if( this.live <= 0 ){
 				this.live = 0;
 				this.liveBar.setLive( ( this.live / this.maxLive ) * 100 );
-				this.gameLayer.endGame();
+				this.scheduleOnce(function() {
+					this.gameLayer.endGame();
+				}, 0.5 );
 			}
 			else
 				this.liveBar.setLive( ( this.live / this.maxLive ) * 100 );
@@ -137,5 +140,5 @@ var Player = cc.Sprite.extend({
 });
 
 Player.MAXAMMO = 100;
-Player.MAXLIFE = 10;
+Player.MAXLIFE = 5;
 Player.SPEED = 8;

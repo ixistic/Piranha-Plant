@@ -22,6 +22,7 @@ var Enemy = cc.Sprite.extend({
 		var pos = this.getPosition();
 		if( pos.y <= 35 ) {
 			this.fall();
+			this.setPosition( -50 , -50 );
 			this.removeFromParent( true );
 		}
 		this.move();

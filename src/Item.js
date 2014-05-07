@@ -14,7 +14,7 @@ var Item = cc.Sprite.extend({
 	update: function( dt ){
 		var pos = this.getPosition();
 		if( pos.y <= 30 ) {
-			this.fall();
+			this.setPosition( -50 , -50 );
 			this.removeFromParent( true );
 		}
 		this.move();
@@ -43,10 +43,6 @@ var Item = cc.Sprite.extend({
 	isFired: function(){
 		this.setPosition( -50 , -50 );
 		this.removeFromParent( true );
-	},
-
-	fall: function(){
-		this.player.attacked( this.damage );
 	},
 
 });
