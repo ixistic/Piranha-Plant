@@ -12,8 +12,24 @@ var ItemFactory = cc.Node.extend({
 	},
 
 	generatePosition: function( item ){
-		item.sX = Math.round( Math.random() * 500 );
+		while( item.sX == 0 ){
+			item.sX = Math.round( Math.random() * 500 ) + 10;
+			for( var i = item.sX - 50 ; i <= item.sX + 50 ; i++ ){
+				if( this.player.keepPosX[i] ){
+					item.sX == 0;
+					break;
+				}
+			}
+			if(item.sX != 0){
+				for( var i = item.sX - 50 ; i <= item.sX + 50 ; i++ ){
+					this.player.keepPosX[i] = true;
+					this.scheduleOnce(function(){
+						this.player.keepPosX[i] = false;
+					}, 5);
+				}
+			}		
+		}
 		item.sY = 700;
-		// console.log( "sX : " + enemy.sX + " sY : " + enemy.sY );
+		// console.log( "sX : " + item.sX + " sY : " + item.sY );
 	}
 });

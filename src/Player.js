@@ -7,8 +7,8 @@ var Player = cc.Sprite.extend({
 		this.runAction( this.standAction );
 		this.enemys = [];
 		this.items = [];
-		this.maxLive = Player.MAXLIFE;
-		this.live = Player.MAXLIFE;
+		this.maxLife = Player.MAXLIFE;
+		this.life = Player.MAXLIFE;
 		this.vX = 0;
 		this.keyLeft = false;
 		this.keyRight = false;
@@ -19,8 +19,10 @@ var Player = cc.Sprite.extend({
 		this.ammo = Player.MAXAMMO;
 		this.currentRotation = 0;
 		this.gameLayer = gameLayer;
-
-		// this.clock();
+		this.keepPosX = [];
+		for( var i = 10 ; i < 510 ; i++ ){
+			this.keepPosX[i] = false;
+		}
 		this.refillAmmo( 2 );
 
 	},
@@ -43,8 +45,9 @@ var Player = cc.Sprite.extend({
 		return cc.RepeatForever.create( cc.Animate.create( animation ) );
 	},
 
-	setLiveBar: function( liveBar ) {
-		this.liveBar = liveBar;
+	setLifeBar: function( lifeBar ) {
+		this.lifeBar = lifeBar;
+		this.lifeBar.setMaxLife( this.maxLife );
 	},
 
 	setAmmoBar: function( ammoBar ) {
@@ -57,18 +60,18 @@ var Player = cc.Sprite.extend({
 	},
 
 	attacked: function( damage ){
-		if( this.live > 0 ){
-			this.live -= damage;
-			console.log(this.life);
-			if( this.live <= 0 ){
-				this.live = 0;
-				this.liveBar.setLive( ( this.live / this.maxLive ) * 100 );
+		if( this.life > 0 ){
+			this.life -= damage;
+			if( this.life <= 0 ){
+				this.life = 0;
+				// this.lifeBar.setLife( ( this.life / this.maxLife ) * 100 );
+				this.lifeBar.setLife(this.life);
 				this.scheduleOnce(function() {
 					this.gameLayer.endGame();
 				}, 0.5 );
 			}
 			else
-				this.liveBar.setLive( ( this.live / this.maxLive ) * 100 );
+				this.lifeBar.setLife(this.life);
 		}
 	},
 

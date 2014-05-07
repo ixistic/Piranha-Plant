@@ -5,7 +5,7 @@ var GameLayer = cc.LayerColor.extend({
         this._super();
         this.setPosition( new cc.Point( 0, 0 ) );
         this.initBackground();
-        this.initPlayerLiveBar();
+        this.initPlayerLifeBar();
         this.initAmmoBar();
         this.initPlayer();
         this.initClock();
@@ -97,10 +97,16 @@ var GameLayer = cc.LayerColor.extend({
         this.enemyFactory = new EnemyFactory( this.player );
     },
 
-    initPlayerLiveBar: function() {
-        this.playerLive = new PlayerLive();
-        this.playerLive.setPosition( cc.p( 30, 50 ) );
-        this.addChild( this.playerLive , 1000);
+    initPlayerLifeBar: function() {
+        this.lifeLabel = cc.LabelTTF.create( 'Life : ', 'Arial', 28 );
+        this.lifeLabel.setColor(new cc.Color3B( 255, 255, 255 ) );
+        this.lifeLabel.setPosition( cc.p( 70, 525 ) );
+        this.lifeLabel.enableStroke( new cc.Color3B( 0, 0, 0 ), 3 );
+        this.addChild( this.lifeLabel, 1000 );
+
+        this.playerLife = new PlayerLife();
+        this.playerLife.setPosition( cc.p( 90, 525 ) );
+        this.addChild( this.playerLife , 1000);
     },
 
     initAmmoBar: function() {
@@ -113,7 +119,7 @@ var GameLayer = cc.LayerColor.extend({
         this.player = new Player( this );
         this.player.setPosition(cc.p( 300 , 35 ));
         this.addChild( this.player , 500 );
-        this.player.setLiveBar( this.playerLive );
+        this.player.setLifeBar( this.playerLife );
         this.player.setAmmoBar( this.ammoBar );
         this.player.scheduleUpdate();
     },
@@ -129,7 +135,7 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     initSound: function() {
-        cc.AudioEngine.getInstance().playMusic( 'sound/soundBg_1.mp3', true );
+        // cc.AudioEngine.getInstance().playMusic( 'sound/soundBg_1.mp3', true );
     },
 
     // onTouchesMoved: function( pTouch, pEvent ){

@@ -6,9 +6,10 @@ var Item = cc.Sprite.extend({
 		this.sX = 0;
 		this.sY = 0;
 		this.numType = numType;
-		this.standAction  = this.createStandAction();
+		this.standAction = this.createStandAction();
 		this.runAction( this.standAction );
 		this.speed = 3;
+		this.glowing = false;
 	},
 
 	update: function( dt ){
@@ -41,8 +42,27 @@ var Item = cc.Sprite.extend({
     },
 
 	isFired: function(){
-		this.setPosition( -50 , -50 );
-		this.removeFromParent( true );
+		if( !this.glowing ) {
+			this.glowing = true;
+			this.glowAction = this.createGlowAction( );
+			this.stopAction( this.standAction );
+			this.runAction( this.glowAction );
+			this.speed = 0;
+			this.scheduleOnce( function() {
+				this.setPosition( -50, -50 );
+				this.removeFromParent( true );
+			}, 0.6);
+		}
+	},
+
+	createGlowAction: function( ) {
+		var animation = new cc.Animation.create();
+		console.log("create grow");
+		for( var i=1;i<=16;i++ ){
+			animation.addSpriteFrameWithFile( 'img/glow/vox_'+i+'.png' );
+		}
+		animation.setDelayPerUnit( 0.1 );
+		return cc.Animate.create( animation );
 	},
 
 });

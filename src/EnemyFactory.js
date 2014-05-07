@@ -12,7 +12,23 @@ var EnemyFactory = cc.Node.extend({
 	},
 
 	genPostion: function( enemy ){
-		enemy.sX = Math.round( Math.random() * 500 );
+		while( enemy.sX == 0 ){
+			enemy.sX = Math.round( Math.random() * 500 ) + 10;
+			for( var i = enemy.sX - 50 ; i <= enemy.sX + 50 ; i++ ){
+				if( this.player.keepPosX[i] ){
+					enemy.sX == 0;
+					break;
+				}
+			}
+			if(enemy.sX != 0){
+				for( var i = enemy.sX - 50 ; i <= enemy.sX + 50 ; i++ ){
+					this.player.keepPosX[i] = true;
+					this.scheduleOnce(function(){
+						this.player.keepPosX[i] = false;
+					}, 5);
+				}
+			}
+		}
 		enemy.sY = 700;
 		// console.log( "sX : " + enemy.sX + " sY : " + enemy.sY );
 	}
