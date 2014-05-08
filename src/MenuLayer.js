@@ -11,7 +11,7 @@ var MenuLayer = cc.Layer.extend({
 
         var director = cc.Director.getInstance();
         var winsize = director.getWinSize();
-        var center = cc.p( 400, 300 );
+        var center = cc.p( 300, 300 );
        
         var bg = cc.Sprite.create();
 
@@ -25,21 +25,11 @@ var MenuLayer = cc.Layer.extend({
 		    results = {name: 'iXisTaC',score: '100'};
 			});
 		});
-		var url = 'https://goinstant.net/0bcdfd48b1a6/PiranhaPlant';
-		var connect = goinstant.connect(url);
-		connect.then(function(result) {
-		    var conn = result.connection;
-		    var lobby = result.rooms[0];
-		    var data = lobby.key('/');
-			data.get().then(function(results) {
-		    results = {name: 'iXisTaC',score: '100'};
-			});
-		});
 		
         bg.createAction = function(){
         	var animation = new cc.Animation.create();
-			for (var i = 1 ; i <= 3 ; i++){
-				animation.addSpriteFrameWithFile( 'img/enemy/mario_a'+i+'.png');
+			for (var i = 1 ; i <= 4 ; i++){
+				animation.addSpriteFrameWithFile( 'img/main_'+i+'.png');
 			}
 			animation.setDelayPerUnit( 0.5 );
 			return cc.RepeatForever.create( cc.Animate.create( animation ) );
