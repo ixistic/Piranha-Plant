@@ -10,6 +10,7 @@ var Item = cc.Sprite.extend({
 		this.runAction( this.standAction );
 		this.speed = 3;
 		this.glowing = false;
+		this.isDestroyed = false;
 	},
 
 	update: function( dt ){
@@ -19,6 +20,7 @@ var Item = cc.Sprite.extend({
 			this.removeFromParent( true );
 		}
 		this.move();
+		this.isHit();
 	},
 
 	move: function(){
@@ -42,26 +44,38 @@ var Item = cc.Sprite.extend({
     },
 
 	isFired: function(){
-		if( this.numType == 0 ) {
-			this.player.unlimitedAmmoMode(true);
-		}
-		else if( this.numType == 1 ) {
-			this.player.bombMode(true);
-		}
-		else if( this.numType == 2 ) {
-			this.player.addTime( 10 );
-		}
+		if(!this.isDestroyed){
+			this.isDestroyed = true;
+			if( this.numType == 0 ) {
+				this.player.unlimitedAmmoMode(true);
+			}
+			else if( this.numType == 1 ) {
+				this.player.bombMode(true);
+			}
+			else if( this.numType == 2 ) {
+				this.player.addTime( 10 );
+			}
 
-		if( !this.glowing ) {
-			this.glowing = true;
-			this.glowAction = this.createGlowAction( );
-			this.stopAction( this.standAction );
-			this.runAction( this.glowAction );
-			this.speed = 0;
-			this.scheduleOnce( function() {
-				this.setPosition( -50, -50 );
-				this.removeFromParent( true );
-			}, 0.6);
+			if( !this.glowing ) {
+				this.glowing = true;
+				this.glowAction = this.createGlowAction( );
+				this.stopAction( this.standAction );
+				this.runAction( this.glowAction );
+				this.speed = 0;
+				this.scheduleOnce( function() {
+					this.setPosition( -50, -50 );
+					this.removeFromParent( true );
+				}, 0.6);
+			}
+		}
+	},
+
+	isHit: function() {
+		var boxPlayer = this.player.getBoundingBoxToWorld();
+		var boxItem = this.getBoundingBoxToWorld();
+
+		if(cc.rectOverlapsRect(boxPlayer,boxItem)){
+			this.isFired();
 		}
 	},
 

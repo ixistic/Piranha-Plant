@@ -4,9 +4,8 @@ var ItemFactory = cc.Node.extend({
 		this.player = player;
 	},
 
-	getItem: function( ){
-		var generateType = Math.round( Math.random() * 2 );
-		var item = new Item( this.player , generateType );
+	getItem: function( type ){
+		var item = new Item( this.player , type );
 		this.generatePosition( item );
 		return item;
 	},

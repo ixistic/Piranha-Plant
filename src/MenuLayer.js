@@ -14,7 +14,7 @@ var MenuLayer = cc.Layer.extend({
         var center = cc.p( 300, 300 );
        
         var bg = cc.Sprite.create();
-
+        cc.AudioEngine.getInstance().playMusic( 'sound/soundMain_1.mp3', true );
 		var url = 'https://goinstant.net/0bcdfd48b1a6/PiranhaPlant';
 		var connect = goinstant.connect(url);
 		connect.then(function(result) {
@@ -42,8 +42,9 @@ var MenuLayer = cc.Layer.extend({
 
 	onTouchBegan:function( touch, event ) {
         // cc.log("==onplay clicked");
+        cc.AudioEngine.getInstance().playEffect( 'sound/FASTPOP.mp3');
         var director = cc.Director.getInstance();
-        director.replaceScene(cc.TransitionFade.create(1.5, new StartScene(true)));
+        director.replaceScene(cc.TransitionFade.create(1.5, new TutorialScene(true)));
     }
 });
 

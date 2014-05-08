@@ -19,7 +19,7 @@ var GameLayer = cc.LayerColor.extend({
         // this.coinLabel.setPosition( new cc.Point( 90, 530 ) );
         // this.coinLabel.enableStroke( new cc.Color3B( 0, 0, 0 ), 3 );
         // this.addChild( this.coinLabel, 4 );
-
+        this.isEndGame = false;
         this.setKeyboardEnabled( true );
         this.setTouchEnabled( true );
         this.setMouseEnabled( true );
@@ -80,7 +80,7 @@ var GameLayer = cc.LayerColor.extend({
         this.timeP = 60;
         this.timeLabel = cc.LabelTTF.create( 'Time : 60', 'Arial', 28 );
         this.timeLabel.setColor(new cc.Color3B( 255, 255, 255 ) );
-        this.timeLabel.setPosition( cc.p( 500, 525 ) );
+        this.timeLabel.setPosition( cc.p( 300, 525 ) );
         this.timeLabel.enableStroke( new cc.Color3B( 0, 0, 0 ), 3 );
         this.addChild( this.timeLabel, 1000 );
 
@@ -100,18 +100,18 @@ var GameLayer = cc.LayerColor.extend({
     initPlayerLifeBar: function() {
         this.lifeLabel = cc.LabelTTF.create( 'Life : ', 'Arial', 28 );
         this.lifeLabel.setColor(new cc.Color3B( 255, 255, 255 ) );
-        this.lifeLabel.setPosition( cc.p( 70, 525 ) );
+        this.lifeLabel.setPosition( cc.p( 70, 60 ) );
         this.lifeLabel.enableStroke( new cc.Color3B( 0, 0, 0 ), 3 );
         this.addChild( this.lifeLabel, 1000 );
 
         this.playerLife = new PlayerLife();
-        this.playerLife.setPosition( cc.p( 90, 525 ) );
+        this.playerLife.setPosition( cc.p( 90, 60 ) );
         this.addChild( this.playerLife , 1000);
     },
 
     initAmmoBar: function() {
         this.ammoBar = new AmmoBar();
-        this.ammoBar.setPosition( cc.p( 30, 550 ) );
+        this.ammoBar.setPosition( cc.p( 500, 525 ) );
         this.addChild( this.ammoBar , 1000);
     },
 
@@ -135,7 +135,7 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     initSound: function() {
-        // cc.AudioEngine.getInstance().playMusic( 'sound/soundBg_1.mp3', true );
+        cc.AudioEngine.getInstance().playMusic( 'sound/main.mp3', true );
     },
 
     // onTouchesMoved: function( pTouch, pEvent ){
@@ -163,7 +163,10 @@ var GameLayer = cc.LayerColor.extend({
     onKeyDown: function( e ){
         switch ( e ) {
             case cc.KEY.space:
-                this.player.fire();
+                if(this.isEndGame)
+                    this.restart();
+                else
+                    this.player.fire();
                 break;
 
             case cc.KEY.right:
@@ -190,18 +193,41 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     endGame: function() {
-        this.map.unscheduleUpdate();
-        var message = "Your score is "+this.score+" ! \n\n\"OK\" Restart ";
-        alert( message );
-        this.restart();
-        // var menu = confirm("Your score is "+this.score+" ! \n\n\"OK\" Restart ");
-        // if(menu){
-        //     var director = cc.Director.getInstance();
-        //     director.replaceScene(cc.TransitionFade.create(1.5, new StartScene()));
-        // }
+        if(!this.isEndGame) {
+            this.isEndGame = true;
+            this.updateTime(0);
+            this.map.unscheduleUpdate();
+            this.player.isEndGame();
+            this.player.unscheduleUpdate();
+            this.endLabel = cc.LabelTTF.create( 'Game Over', 'Arial', 48 );
+            this.endLabel.setColor(new cc.Color3B( 255, 255, 255 ) );
+            this.endLabel.setPosition( cc.p( 300, 400 ) );
+            this.endLabel.enableStroke( new cc.Color3B( 0, 0, 0 ), 3 );
+            this.endLabel2 = cc.LabelTTF.create( 'Your score is '+this.score, 'Arial', 24 );
+            this.endLabel2.setColor(new cc.Color3B( 255, 255, 255 ) );
+            this.endLabel2.setPosition( cc.p( 300, 320 ) );
+            this.endLabel2.enableStroke( new cc.Color3B( 0, 0, 0 ), 3 );
+            this.endLabel3 = cc.LabelTTF.create( 'Press SPACE BAR to restart', 'Arial', 20 );
+            this.endLabel3.setColor(new cc.Color3B( 255, 255, 255 ) );
+            this.endLabel3.setPosition( cc.p( 300, 240 ) );
+            this.endLabel3.enableStroke( new cc.Color3B( 0, 0, 0 ), 3 );
+            this.addChild(this.endLabel);
+            this.addChild(this.endLabel2);
+            this.addChild(this.endLabel3);
+            cc.AudioEngine.getInstance().playEffect( 'sound/GIGGLE.mp3');
+            // var message = "Your score is "+this.score+" ! \n\n\"OK\" Restart ";
+            // alert( message );
+            // this.restart();
+            // var menu = confirm("Your score is "+this.score+" ! \n\n\"OK\" Restart ");
+            // if(menu){
+            //     var director = cc.Director.getInstance();
+            //     director.replaceScene(cc.TransitionFade.create(1.5, new StartScene()));
+            // }
+        }
     },
 
     restart: function() {
+        cc.AudioEngine.getInstance().stopMusic();
         var director = cc.Director.getInstance();
         director.replaceScene(cc.TransitionFade.create(1.5, new MenuScene()));
     },

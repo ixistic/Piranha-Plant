@@ -6,18 +6,20 @@ var Map = cc.Node.extend({
 		this.enemyFactory = enemyFactory;
 		this.itemFactory = itemFactory;
 		this.gameLayer = gameLayer;
-		this.upperBound = 5;
-		this.schedule( this.updateUpperBound , 10 );
+		this.upperBound = 4;
+		this.schedule( this.updateUpperBound , 5 );
 		this.spawnEnemy( 1 );
-		this.spawnItem( 1 );
+		this.spawnItem( 15 , 0 );
+		this.spawnItem( 12 , 1 );
+		this.spawnItem( 10 , 2 );
 	},
 
 	updateUpperBound: function() {
 		// console.log("ice");
 		this.upperBound -= 0.5;
-			if(this.upperBound == 0){
-				this.getScheduler().unscheduleCallbackForTarget(this,this.updateUpperBound);
-			}
+		if(this.upperBound == 0){
+			this.getScheduler().unscheduleCallbackForTarget(this,this.updateUpperBound);
+		}
 	},
 
 	spawnEnemy: function( delay ){
@@ -27,23 +29,24 @@ var Map = cc.Node.extend({
 			enemy.scheduleUpdate();
 			this.addChild( enemy , 50 );
 			this.player.enemys.push( enemy );
-			var randomTime = Math.round( Math.random() * 2 ) + this.upperBound;
+			var randomTime = Math.round( Math.random() * 1.5 ) + this.upperBound;
 			this.spawnEnemy( randomTime );
+			if( this.player.endGame )
+				this.getScheduler().unscheduleAllCallbacksForTarget( this );
 		}, delay );
 	},
 
-	spawnItem: function( delay ){
-		this.scheduleOnce(function(){
-			var item = this.itemFactory.getItem();
+	spawnItem: function( delay , type ){
+		this.schedule(function(){
+			var item = this.itemFactory.getItem( type );
 			item.setPosition( cc.p( item.sX, item.sY ) );
 			// console.log(item.sX + " " + item.sY);
 			item.scheduleUpdate();
 			this.addChild( item , 60 );
 			this.player.items.push( item );
-			var randomTime = Math.round( Math.random() * 5 ) + 5;
-			this.spawnItem( randomTime );
-			// if( this.player.endGame )
-			// 	this.getScheduler().unscheduleAllCallbacksForTarget( this );
+			
+			if( this.player.endGame )
+				this.getScheduler().unscheduleAllCallbacksForTarget( this );
 		}, delay );
 	},
 

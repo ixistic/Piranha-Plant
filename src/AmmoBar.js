@@ -3,31 +3,25 @@ var AmmoBar = cc.Node.extend({
 	ctor: function() {
 		this.started = false;
 		this._super();
-		this.size = AmmoBar.SIZE;
-		this.DEFAULT_SCALE_X = ( this.size / 40.0 ) + 2;
 		this.createAmmoBar();
 
 	},
 
 	createAmmoBar: function() {
-		this.ammoBar = cc.Sprite.create( 'img/hp_green.png' );
-		this.ammoBar.setScaleX( ( this.size / 40.0 ) + 2 );
-		this.ammoBar.setScaleY( 5 );
-		this.ammoBar.setAnchorPoint( new cc.Point( 0, 0 ) );
-		this.ammoBar.setPosition( new cc.Point( 0, 0 ) );
-		this.addChild( this.ammoBar );
-
-		this.barBoarder = cc.Sprite.create( 'img/enemy_bar_border.png' );
-		this.barBoarder.setScaleY( 5 );
-		this.barBoarder.setScaleX( ( this.size / 80.0 ) + 1 );
-		this.barBoarder.setAnchorPoint( new cc.Point( 0, 0 ) );
-		this.barBoarder.setPosition( new cc.Point( 0, 0 ) );
-		this.addChild( this.barBoarder );
+		this.ammoLabel = cc.LabelTTF.create( 'Ammo : 50', 'Arial', 28 );
+        this.ammoLabel.setColor(new cc.Color3B( 255, 255, 255 ) );
+        this.ammoLabel.setPosition( cc.p( 390, 525 ) );
+        this.ammoLabel.enableStroke( new cc.Color3B( 0, 0, 0 ), 3 );
+		this.ammoLabel.setPosition( new cc.Point( 0, 0 ) );
+		this.addChild( this.ammoLabel );
 	},
 
-	setAmmo: function( percent ) {
-		this.ammoBar.setScaleX( this.DEFAULT_SCALE_X * ( percent / 100 ) );
+	setAmmo: function( ammo ) {
+        var tmp = ""
+        if(ammo < 10) 
+            tmp = "Ammo : 0" + ammo;
+        else if(ammo < 100) 
+            tmp = "Ammo : " + ammo;
+		this.ammoLabel.setString( tmp );
 	}
 });
-
-AmmoBar.SIZE = 450;

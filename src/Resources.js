@@ -1,4 +1,8 @@
 var Resources = [
-	// {src: "img/ground.png"},
-	
+
+	{src: "sound/soundMain_1.mp3"},
+	{src: "sound/main.mp3"},
+	{src: "sound/soundMain_1.mp3"},
+	{src: "sound/soundMain_1.mp3"},
+	{src: "sound/soundMain_1.mp3"},
 ];

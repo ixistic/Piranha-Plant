@@ -57,6 +57,7 @@ var Enemy = cc.Sprite.extend({
 	isFired: function(){
 		if( !this.blooding ) {
 			this.hp -= 1;
+			cc.AudioEngine.getInstance().playEffect( 'sound/AH0.mp3');
 			if( this.hp <= 0 ) {
 				this.isKilled();
 			}
