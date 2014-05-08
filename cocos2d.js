@@ -21,7 +21,10 @@
             'src/Fireball.js',
             'src/AmmoBar.js',
             'src/Item.js',
-            'src/ItemFactory.js',  //add your own files in order here
+            'src/ItemFactory.js', 
+            'src/MenuLayer.js',
+            'src/Resources.js',
+            'https://cdn.goinstant.net/v1/platform.min.js', //add your own files in order here
         ]
     };
 

@@ -58,18 +58,22 @@ var Enemy = cc.Sprite.extend({
 		if( !this.blooding ) {
 			this.hp -= 1;
 			if( this.hp <= 0 ) {
-				this.blooding = true;
-				this.bloodAction  = this.createBloodAction( );
-				this.stopAction( this.standAction );
-				this.runAction( this.bloodAction );
-				// this.removeFromParent( true );
-				this.speed = 0;
-				this.scheduleOnce( function() {
-					this.setPosition( -50, -50 );
-					this.removeFromParent( true );
-				}, 0.5);
+				this.isKilled();
 			}
 		}
+	},
+
+	isKilled: function() {
+		this.blooding = true;
+		this.bloodAction  = this.createBloodAction( );
+		this.stopAction( this.standAction );
+		this.runAction( this.bloodAction );
+		// this.removeFromParent( true );
+		this.speed = 0;
+		this.scheduleOnce( function() {
+			this.setPosition( -50, -50 );
+			this.removeFromParent( true );
+		}, 0.5);
 	},
 
 	fall: function(){

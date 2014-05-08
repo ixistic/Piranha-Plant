@@ -203,7 +203,7 @@ var GameLayer = cc.LayerColor.extend({
 
     restart: function() {
         var director = cc.Director.getInstance();
-        director.replaceScene(cc.TransitionFade.create(1.5, new StartScene()));
+        director.replaceScene(cc.TransitionFade.create(1.5, new MenuScene()));
     },
 });
 

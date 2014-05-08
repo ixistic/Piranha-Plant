@@ -23,7 +23,7 @@ var Player = cc.Sprite.extend({
 		for( var i = 10 ; i < 510 ; i++ ){
 			this.keepPosX[i] = false;
 		}
-		this.unlimitMode = false;
+		this.unlimitedAmmo = false;
 		this.refillAmmo( 3 );
 
 	},
@@ -76,6 +76,26 @@ var Player = cc.Sprite.extend({
 		}
 	},
 
+	unlimitedAmmoMode: function( boolean ) {
+		if( boolean ){
+			this.scheduleOnce( function() {
+				this.unlimitedAmmoMode(false);
+			}, 3);
+		}
+		this.unlimitedAmmo = boolean;
+	},
+
+	bombMode: function( boolean ) {
+		for( var i = 0; i < this.enemys.length; i++ ){
+			this.enemys[i].isKilled();
+		}
+		this.enemys = []
+	},
+
+	addTime: function( time ) {
+		this.gameLayer.updateTime( time );
+	},
+
 	goRight: function() {
 		this.setFlippedX( true );
 		this.keyRight = true;
@@ -114,7 +134,8 @@ var Player = cc.Sprite.extend({
 	},
 
 	fire: function(  ){
-		if( !this.unlimitMode ) {
+		console.log(this.unlimitedAmmo);
+		if( !this.unlimitedAmmo ) {
 			if( this.ammo > 0 ){
 				this.ammo -= 1;
 				this.ammoBar.setAmmo( ( this.ammo / this.maxAmmo ) * 100 );
